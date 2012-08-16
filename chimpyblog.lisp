@@ -14,8 +14,9 @@
   (connect (list host db-name username password) :database-type :postgresql))
 
 (defun create-tables ()
-  (mapcar #'create-view-from-class '(post)))
+  (mapcar #'create-view-from-class '(post user)))
 
 (defun drop-tables ()
-  (mapcar #'drop-view-from-class '(post)))
+  (mapcar #'drop-view-from-class '(post user)))
+
 
