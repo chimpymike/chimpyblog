@@ -22,3 +22,8 @@
 (defun get-all-posts ()
   (select 'post :flatp t))
 
+(defmethod perma-link ((post post))
+  (let ((post-link (concatenate 'string "/" (slug post)))
+	(post-title (title post)))
+    (with-html-output (*standard-output* nil :indent t)
+      (:h2 (:a :href post-link (str post-title))))))
