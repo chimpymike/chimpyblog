@@ -32,3 +32,22 @@
      (:body
       (:h1 "Add new post")
       (show-formlet add-post-form)))))
+
+(defun hash-password (password)
+  (let ((password-bytes (ironclad:ascii-string-to-byte-array password)))
+    (ironclad:pbkdf2-hash-password-to-combined-string password-bytes)))
+
+(define-formlet (add-user-form)
+    ((email text) (name text) (password password)
+     (confirm-password password :validation ((same-as? "password") "Passwords do not match.")))
+  (let* ((hashed-password (hash-password password))
+	 (new-user (make-instance 'user :email email :name name :password hashed-password)))
+    (update-records-from-instance new-user)
+    (redirect "/")))
+
+(defun add-user-page ()
+  (with-html-output-to-string (*standard-output* nil :prologue t :indent t)
+    (:html
+     (:body
+      (:h1 "Add new user")
+      (show-formlet add-user-form)))))
