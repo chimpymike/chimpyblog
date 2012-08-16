@@ -40,3 +40,9 @@
    (password
     :accessor password :initarg :password :type string))
   (:base-table chimpyblog-user))
+
+(defun get-user-by-name (name)
+  (caar (select 'user :where [= [slot-value 'user 'name] name])))
+
+(defun get-user-by-id (id)
+  (caar (select 'user :where [= [slot-value 'user 'id] id])))
