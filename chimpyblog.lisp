@@ -19,4 +19,20 @@
 (defun drop-tables ()
   (mapcar #'drop-view-from-class '(post user)))
 
+;;;; Hunchentoot dispatchers
+
+(defun post-exists-p (uri)
+  (let* ((slug (get-slug-from-uri uri))
+	 (post (get-post-by-slug slug)))
+    (if post t)))
+
+(defun create-dispatch-table ()
+  (setf *dispatch-table*
+	(list (lambda (request) (if (post-exists-p (script-name request)) #'show-post))
+	      (create-regex-dispatcher "^/$" #'home-page)
+	      (create-regex-dispatcher "^/add-user/?$" #'add-user-page)
+	      (create-regex-dispatcher "^/add-post/?$" #'add-post-page)
+	      (create-regex-dispatcher "^/login/?$" #'login-user-page)
+	      (create-regex-dispatcher "^/user/?$" #'user-page)
+	      'hunchentoot:dispatch-easy-handlers)))
 
