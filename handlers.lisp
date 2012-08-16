@@ -85,3 +85,7 @@
 	   (:body
 	    (:h1 "Not currently logged in.")
 	    (:a :href "/login" "Login")))))))
+
+(defun home-page ()
+  (let ((posts (get-all-posts)))
+    (home-page-view posts)))
