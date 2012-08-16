@@ -20,7 +20,7 @@
   (string-trim "-" (cl-ppcre:regex-replace-all "[^a-z0-9-]+" (string-downcase title) "-")))
 
 (define-formlet (add-post-form)
-    ((title text) (body textarea))
+    ((title text :validation ((not-blank?) "Title is required.")) (body textarea :validation ((not-blank?) "Body is required")))
   (let* ((slug (make-slug-from-title title))
 	 (new-post (make-instance 'post :title title :body body :slug slug)))
     (update-records-from-instance new-post)
