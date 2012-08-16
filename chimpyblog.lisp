@@ -2,6 +2,10 @@
 
 (in-package #:chimpyblog)
 
+;;;; Server utilities
+(defun server-start (&optional (port 4242))
+  (start (make-instance 'easy-acceptor :port port)))
+
 ;;;; Database utilities
 (defun db-create (host db-name username password)
   (create-database (list host db-name username password) :database-type :postgresql))
