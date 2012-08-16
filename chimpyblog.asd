@@ -8,8 +8,10 @@
   :depends-on (#:hunchentoot
                #:cl-who
                #:formlets
-               #:clsql)
+               #:clsql
+	       #:ironclad)
   :components ((:file "package")
-               (:file "chimpyblog")
-	       (:file "model")))
+	       (:file "model")
+	       (:file "handlers")
+               (:file "chimpyblog")))
 
