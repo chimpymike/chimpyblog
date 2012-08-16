@@ -15,3 +15,10 @@
     :accessor title :initarg :title :type string)
    (body
     :accessor body :initarg :body :type string)))
+
+(defun get-post-by-slug (slug)
+  (caar (select 'post :where [= [slot-value 'post 'slug] slug])))
+
+(defun get-all-posts ()
+  (select 'post :flatp t))
+
