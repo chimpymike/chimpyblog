@@ -15,3 +15,20 @@
 		(:h1 (str title))
 		(:div :class "body" (str body)))))))
 	nil)))
+
+(defun make-slug-from-title (title)
+  (string-trim "-" (cl-ppcre:regex-replace-all "[^a-z0-9-]+" (string-downcase title) "-")))
+
+(define-formlet (add-post-form)
+    ((title text) (body textarea))
+  (let* ((slug (make-slug-from-title title))
+	 (new-post (make-instance 'post :title title :body body :slug slug)))
+    (update-records-from-instance new-post)
+    (redirect (concatenate 'string "/" slug))))
+
+(defun add-post-page ()
+  (cl-who:with-html-output-to-string (*standard-output* nil :prologue t :indent t)
+    (:html
+     (:body
+      (:h1 "Add new post")
+      (show-formlet add-post-form)))))
