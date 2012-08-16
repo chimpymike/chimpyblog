@@ -71,3 +71,17 @@
      (:body
       (:h1 "Login")
       (show-formlet login-user-form)))))
+
+(defun user-page ()
+  (let* ((user-id (session-value :user-id))
+	 (user (get-user-by-id user-id)))
+    (if user
+	(with-html-output-to-string (*standard-output* nil :indent t :prologue t)
+	  (:html
+	   (:body
+	    (:h1 "Username: " (str (name user))))))
+	(with-html-output-to-string (*standard-output nil :indent t :prologue t)
+	  (:html
+	   (:body
+	    (:h1 "Not currently logged in.")
+	    (:a :href "/login" "Login")))))))
