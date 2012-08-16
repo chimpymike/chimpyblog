@@ -27,3 +27,16 @@
 	(post-title (title post)))
     (with-html-output (*standard-output* nil :indent t)
       (:h2 (:a :href post-link (str post-title))))))
+
+;;;; User
+(def-view-class user ()
+  ((id
+    :accessor id :initarg :id :type integer
+    :db-constraints (:not-null :auto-increment) :db-kind :key)
+   (email
+    :accessor email :initarg :email :type string)
+   (name
+    :accessor name :initarg :name :type string)
+   (password
+    :accessor password :initarg :password :type string))
+  (:base-table chimpyblog-user))
