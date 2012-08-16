@@ -51,3 +51,23 @@
      (:body
       (:h1 "Add new user")
       (show-formlet add-user-form)))))
+
+(defun check-password (name password)
+  (let ((password-bytes (ironclad:ascii-string-to-byte-array password))
+	(user (get-user-by-name name)))
+    (when user
+      (ironclad:pbkdf2-check-password password-bytes (password user)))))
+
+(define-formlet (login-user-form :submit "Login"
+				 :general-validation (#'check-password "Bad username or password."))
+    ((username text) (password password))
+  (let ((user (get-user-by-name username)))
+  (setf (session-value :user-id) (id user))
+  (redirect "/user")))
+
+(defun login-user-page ()
+  (with-html-output-to-string (*standard-output* nil :prologue t :indent t)
+    (:html
+     (:body
+      (:h1 "Login")
+      (show-formlet login-user-form)))))
