@@ -2,6 +2,8 @@
 
 (in-package #:chimpyblog)
 
+(file-enable-sql-reader-syntax)
+
 ;;;; Post
 (def-view-class post ()
   ((id
