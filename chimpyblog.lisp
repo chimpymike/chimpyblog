@@ -14,10 +14,10 @@
   (connect (list host db-name username password) :database-type :postgresql))
 
 (defun create-tables ()
-  (mapcar #'create-view-from-class '(post user)))
+  (mapcar #'create-view-from-class '(post user comment)))
 
 (defun drop-tables ()
-  (mapcar #'drop-view-from-class '(post user)))
+  (mapcar #'drop-view-from-class '(post user comment)))
 
 ;;;; Hunchentoot dispatchers
 
