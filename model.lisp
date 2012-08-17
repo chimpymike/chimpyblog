@@ -28,6 +28,20 @@
     (with-html-output (*standard-output* nil :indent t)
       (:h2 (:a :href post-link (str post-title))))))
 
+;;;; Comment
+(def-view-class comment ()
+  ((id
+    :accessor id :initarg :id :type integer
+    :db-constraints (:not-null :auto-increment) :db-kind :key)
+   (email
+    :accessor email :initarg :email :type string)
+   (name
+    :accessor name :initarg :name :type string)
+   (website
+    :accessor website :initarg :website :type string)
+   (body
+    :accessor body :initarg :body :type string)))
+
 ;;;; User
 (def-view-class user ()
   ((id
