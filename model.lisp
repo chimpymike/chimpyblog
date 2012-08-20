@@ -14,7 +14,10 @@
    (title
     :accessor title :initarg :title :type string)
    (body
-    :accessor body :initarg :body :type string)))
+    :accessor body :initarg :body :type string)
+   (comments
+    :reader comments :db-kind :join
+    :db-info (:join-class comment :home-key id :foreign-key post-id :set t))))
 
 (defun get-post-by-slug (slug)
   (caar (select 'post :where [= [slot-value 'post 'slug] slug])))
@@ -40,7 +43,12 @@
    (website
     :accessor website :initarg :website :type string)
    (body
-    :accessor body :initarg :body :type string)))
+    :accessor body :initarg :body :type string)
+   (post-id
+    :initarg :post-id :type integer)
+   (post
+    :accessor post :db-kind :join
+    :db-info (:join-class post :home-key post-id :foreign-key id :set nil))))
 
 ;;;; User
 (def-view-class user ()
