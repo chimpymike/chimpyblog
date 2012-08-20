@@ -16,8 +16,8 @@
 (defun create-tables ()
   (mapcar #'create-view-from-class '(post user comment)))
 
-(defun drop-tables ()
-  (mapcar #'drop-view-from-class '(post user comment)))
+(defun drop-tables (&key owner)
+  (mapcar (lambda (table) (drop-view-from-class table :owner owner)) '(post user comment)))
 
 ;;;; Hunchentoot dispatchers
 
